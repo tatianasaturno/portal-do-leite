@@ -1,10 +1,13 @@
 package models;
 
+import javax.persistence.*;
+
 /**
  * Uma classe que representa um tema estudado em uma disciplina
  * @author Júlio Neves
  *
  */
+@Entity
 public class Tema {
 	
 	public enum Dificuldade{
@@ -19,6 +22,10 @@ public class Tema {
 			return valorNumerico;
 		}
 	}
+	
+	@Id
+	@GeneratedValue
+	private Long id;
 	
 	private String nome;
 	
