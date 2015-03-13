@@ -4,79 +4,79 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import play.db.jpa.JPA;
+
 public class ApplicationDAO implements AbstractDAO<Object>{
 
 	@Override
 	public void flush() {
-		// TODO Auto-generated method stub
-		
+		JPA.em().flush();		
 	}
 
 	@Override
 	public void commitAndContinue() {
-		// TODO Auto-generated method stub
-		
+		JPA.em().getTransaction().commit();
+		JPA.em().getTransaction().begin();
 	}
 
 	@Override
 	public void commit() {
-		// TODO Auto-generated method stub
-		
+		JPA.em().getTransaction().commit();		
 	}
 
 	@Override
 	public void refresh(Object obj) {
-		// TODO Auto-generated method stub
+		JPA.em().refresh(obj);
 		
 	}
 
 	@Override
 	public void merge(Object obj) {
-		// TODO Auto-generated method stub
+		JPA.em().merge(obj);
 		
 	}
 
 	@Override
 	public void persist(Object obj) {
-		// TODO Auto-generated method stub
+		JPA.em().persist(obj);
 		
 	}
 
 	@Override
 	public void remove(Object obj) {
-		// TODO Auto-generated method stub
+		JPA.em().remove(obj);
 		
 	}
 
 	@Override
 	public void removeElementById(Class<Object> clazz, Long id) {
-		// TODO Auto-generated method stub
-		
+		JPA.em().remove(getElementById(clazz, id));		
 	}
 
 	@Override
 	public Object getElementById(Class<Object> clazz, Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return JPA.em().find(clazz, id);
 	}
 
 	@Override
 	public List<Object> getAllByClass(Class<Object> clazz) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM " + clazz.getCanonicalName(); //FIXME esse metodo realmente é o certo?
+		Query query = createQuery(hql);
+		return query.getResultList();
 	}
 
 	@Override
 	public List<Object> getByAttributeName(Class<Object> clazz, String attributeName,
 			String attributeValue) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM " + clazz.getCanonicalName() + " c" + " WHERE c." + attributeName //FIXME esse metodo realmente é o certo?
+				+ " = '" + attributeValue + "'";
+		Query hqlQuery = JPA.em().createQuery(hql);
+		return hqlQuery.getResultList();
 	}
 
 	@Override
 	public Query createQuery(String query) {
-		// TODO Auto-generated method stub
-		return null;
+		return JPA.em().createQuery(query);
 	}
 
 }
