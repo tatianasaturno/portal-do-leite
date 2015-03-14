@@ -10,7 +10,7 @@ public interface AbstractDAO<T>{
 	
 	public void commitAndContinue();
 	
-	public void commit();
+	public void commitAndFinalize();
 	
 	public void refresh(T obj);
 	
@@ -20,13 +20,13 @@ public interface AbstractDAO<T>{
 	
 	public void remove(T obj);
 	
-	public void removeElementById(Class<T> clazz, Long id);
+	public <T> void removeElementById(Class<T> clazz, Long id);
 	
-	public T getElementById(Class<T> clazz, Long id);
+	public <T> T getElementById(Class<T> clazz, Long id);
 	
-	public List<T> getAllByClass(Class<T> clazz);
+	public <T> List<T> getAllByClass(Class<T> clazz);
 	
-	public List<T> getByAttributeName(Class<T> clazz, String attributeName, String attributeValue);
+	public <T> List<T> getByAttributeName(Class<T> clazz, String attributeName, String attributeValue);
 	
 	public Query createQuery(String query);
 

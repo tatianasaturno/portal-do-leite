@@ -20,7 +20,7 @@ public class ApplicationDAO implements AbstractDAO<Object>{
 	}
 
 	@Override
-	public void commit() {
+	public void commitAndFinalize() {
 		JPA.em().getTransaction().commit();		
 	}
 
@@ -49,26 +49,26 @@ public class ApplicationDAO implements AbstractDAO<Object>{
 	}
 
 	@Override
-	public void removeElementById(Class<Object> clazz, Long id) {
+	public <T> void removeElementById(Class<T> clazz, Long id) {
 		JPA.em().remove(getElementById(clazz, id));		
 	}
 
 	@Override
-	public Object getElementById(Class<Object> clazz, Long id) {
+	public <T> T getElementById(Class<T> clazz, Long id) {
 		return JPA.em().find(clazz, id);
 	}
 
 	@Override
-	public List<Object> getAllByClass(Class<Object> clazz) {
-		String hql = "FROM " + clazz.getCanonicalName(); //FIXME esse metodo realmente é o certo?
+	public <T> List<T> getAllByClass(Class<T> clazz) {
+		String hql = "FROM " + clazz.getSimpleName(); 
 		Query query = createQuery(hql);
 		return query.getResultList();
 	}
 
 	@Override
-	public List<Object> getByAttributeName(Class<Object> clazz, String attributeName,
+	public <T> List<T> getByAttributeName(Class<T> clazz, String attributeName,
 			String attributeValue) {
-		String hql = "FROM " + clazz.getCanonicalName() + " c" + " WHERE c." + attributeName //FIXME esse metodo realmente é o certo?
+		String hql = "FROM " + clazz.getSimpleName() + " c" + " WHERE c." + attributeName
 				+ " = '" + attributeValue + "'";
 		Query hqlQuery = JPA.em().createQuery(hql);
 		return hqlQuery.getResultList();

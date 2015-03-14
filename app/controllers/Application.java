@@ -1,11 +1,17 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
+import java.util.List;
 
+import models.dao.ApplicationDAO;
+import models.Tema;
+import play.*;
+import play.db.jpa.Transactional;
+import play.mvc.*;
 import views.html.*;
 
 public class Application extends Controller {
+	
+	private static ApplicationDAO dao = new ApplicationDAO();
 
     public static Result index() {
         return redirect(routes.Application.login());
@@ -15,8 +21,10 @@ public class Application extends Controller {
     	return ok(login.render());
     }
     
+    @Transactional
     public static Result home() {
-    	return ok(home.render());
+    	List<Tema> temas = dao.getAllByClass(Tema.class);
+    	return ok(home.render(temas));
     }
     
     public static Result register() {

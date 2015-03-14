@@ -16,11 +16,24 @@ public class IntegrationTest {
      * in this example we just check if the welcome page is being shown
      */
     @Test
-    public void test() {
+    public void testaLogin() {
         running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
             public void invoke(TestBrowser browser) {
                 browser.goTo("http://localhost:3333/login");
                 assertThat(browser.pageSource()).contains("Portal do Leite");
+            }
+        });
+    }
+    
+    @Test
+    public void testaHome() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+            public void invoke(TestBrowser browser) {
+                browser.goTo("http://localhost:3333/home");
+                assertThat(browser.pageSource()).contains("Portal do Leite");
+                assertThat(browser.pageSource()).contains("Análise e Design");
+                assertThat(browser.pageSource()).contains("Javascript");
+                assertThat(browser.pageSource()).contains("Projeto");
             }
         });
     }
