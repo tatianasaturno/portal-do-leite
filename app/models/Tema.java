@@ -1,5 +1,10 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.persistence.*;
 
 /**
@@ -29,15 +34,29 @@ public class Tema {
 	
 	private String nome;
 	
-	public Tema(){
-	}
+	@ElementCollection
+	private Map<Aluno, Dificuldade> avaliacoes;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<Dica> dicas;
+	
 	
 	public Tema(String nome){
+		dicas = new ArrayList<Dica>();
+		avaliacoes = new HashMap<Aluno, Dificuldade>();
 		this.nome = nome;
 	}
 	
+	public Tema(){
+		this("");
+	}
+
 	public String getNome(){
 		return nome;
+	}
+	
+	public Long getId(){
+		return id;
 	}
 	
 }

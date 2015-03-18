@@ -30,5 +30,11 @@ public class Application extends Controller {
     public static Result register() {
     	return ok(register.render());
     }
+    
+    @Transactional
+    public static Result details(Long id){
+    	Tema temaSelecionado = dao.getElementById(Tema.class, id);
+    	return ok(details.render(temaSelecionado));
+    }
 
 }

@@ -6,6 +6,7 @@
 GET		/							controllers.Application.index()
 GET     /login                      controllers.Application.login()
 GET		/home						controllers.Application.home()
+GET		/details/:id				controllers.Application.details(id:Long)
 GET		/register					controllers.Application.register()
 
 # Map static resources from the /public folder to the /assets URL path
