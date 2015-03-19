@@ -6,6 +6,7 @@ import models.dao.ApplicationDAO;
 import models.Tema;
 import play.*;
 import play.db.jpa.JPA;
+import play.libs.F.Callback0;
 
 public class Global extends GlobalSettings{
 	
@@ -13,7 +14,7 @@ public class Global extends GlobalSettings{
 	private List<Tema> temasDefault = new LinkedList<Tema>();
 	
 	public void onStart(Application app){
-		JPA.withTransaction(new play.libs.F.Callback0() {
+		JPA.withTransaction(new Callback0() {
             @Override
             public void invoke() throws Throwable {
             	Logger.info("Aplicacao inicializada - adicionando temas ao sistema");
